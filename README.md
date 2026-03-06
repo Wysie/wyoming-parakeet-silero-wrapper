@@ -29,7 +29,7 @@ This wrapper provides a complete Wyoming ASR service that Home Assistant can dis
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.8+
+- Python 3.9+
 - [uv](https://docs.astral.sh/uv/) (Python package manager)
 - NVIDIA GPU with CUDA support
 - 4GB+ VRAM available

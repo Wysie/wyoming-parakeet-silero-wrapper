@@ -3,7 +3,7 @@ name = "wyoming-parakeet-silero-wrapper"
 version = "0.1.0"
 description = "Wyoming wrapper for Parakeet and Silero - a drop-in replacement for faster-whisper in Home Assistant"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 
 dependencies = [
     # Core Wyoming Protocol
