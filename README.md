@@ -33,7 +33,7 @@ This wrapper provides a complete Wyoming ASR service that Home Assistant can dis
 - [uv](https://docs.astral.sh/uv/) (Python package manager)
 - NVIDIA GPU with CUDA support
 - 4GB+ VRAM available
-- Linux/Ubuntu system
+- Linux/Ubuntu system (or WSL2 on Windows — see [Windows Setup via WSL2](#-windows-setup-via-wsl2) below)
 
 ### Installation
 
@@ -55,7 +55,6 @@ uv sync --extra gpu
 
 3. **Test the service**:
 ```bash
-chmod +x manage.sh
 ./manage.sh test
 ```
 
@@ -65,6 +64,45 @@ chmod +x manage.sh
 ```
 
 The service will be available at `tcp://localhost:10300` and compatible with Home Assistant Wyoming Protocol integration.
+
+## 🪟 Windows Setup via WSL2
+
+This project requires a Linux environment. On Windows, use **WSL2** (Windows Subsystem for Linux), which provides full CUDA GPU passthrough.
+
+### 1. Install WSL2 with Ubuntu
+
+Open PowerShell as Administrator:
+```powershell
+wsl --install -d Ubuntu
+```
+
+Restart your PC when prompted, then launch Ubuntu from the Start menu to finish setup.
+
+### 2. Install NVIDIA CUDA drivers for WSL
+
+Install the [NVIDIA CUDA driver for WSL](https://developer.nvidia.com/cuda/wsl) on the **Windows side** (not inside WSL). WSL2 will automatically access your GPU.
+
+Verify GPU access inside WSL:
+```bash
+nvidia-smi
+```
+
+### 3. Install uv inside WSL
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+### 4. Clone and run
+
+```bash
+git clone <your-repo-url>
+cd parakeet-wyoming-wrapper
+uv sync
+./manage.sh start
+```
+
+> **Note:** Run all commands inside the WSL terminal, not PowerShell. The bash scripts (`manage.sh`, `install_service.sh`, etc.) and systemd services only work in a Linux environment.
 
 ## ⚙️ Configuration
 
