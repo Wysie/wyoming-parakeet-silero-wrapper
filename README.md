@@ -30,6 +30,7 @@ This wrapper provides a complete Wyoming ASR service that Home Assistant can dis
 
 ### Prerequisites
 - Python 3.8+
+- [uv](https://docs.astral.sh/uv/) (Python package manager)
 - NVIDIA GPU with CUDA support
 - 4GB+ VRAM available
 - Linux/Ubuntu system
@@ -44,7 +45,12 @@ cd parakeet-wyoming-wrapper
 
 2. **Install dependencies**:
 ```bash
-pip install -r requirements.txt
+uv sync
+```
+
+For GPU-accelerated ONNX Runtime and CUDA Python support, install the optional GPU extras:
+```bash
+uv sync --extra gpu
 ```
 
 3. **Test the service**:
@@ -136,10 +142,10 @@ wake_word:
 ### Manual Testing
 ```bash
 # Test service discovery
-python3 wyoming_test_client.py --uri tcp://localhost:10300
+uv run python3 wyoming_test_client.py --uri tcp://localhost:10300
 
 # Test with audio file
-python3 wyoming_test_client.py --uri tcp://localhost:10300 --audio-file test.wav
+uv run python3 wyoming_test_client.py --uri tcp://localhost:10300 --audio-file test.wav
 ```
 
 ## 🔧 Advanced Configuration
@@ -158,9 +164,9 @@ journalctl -u parakeet-wyoming -f
 
 ### GPU Optimization
 
-For even better performance, install CUDA Python:
+For even better performance, install the GPU extras which include CUDA Python and ONNX Runtime GPU:
 ```bash
-pip install cuda-python>=12.3
+uv sync --extra gpu
 ```
 
 ### Log Management
@@ -214,7 +220,7 @@ Optimized for **25 European languages**:
 1. **Ensure models stay loaded**: Don't restart the service frequently
 2. **Adjust VAD settings**: Higher threshold = faster cutoff
 3. **Check GPU utilization**: `nvidia-smi`
-4. **Install CUDA Python**: `pip install cuda-python>=12.3`
+4. **Install GPU extras**: `uv sync --extra gpu`
 
 ### Audio Not Transcribed
 
@@ -274,6 +280,3 @@ MIT License - feel free to use in your projects!
 2. `./manage.sh setup-logs` - Configure log management  
 3. Add to Home Assistant Wyoming integration
 4. Enjoy 35x faster voice recognition! 🎉
-=======
-# wyoming-parakeet-silero-wrapper
-Wyoming wrapper for Parakeet and Silero - a drop-in replacement for faster-whisper in Home Assistant

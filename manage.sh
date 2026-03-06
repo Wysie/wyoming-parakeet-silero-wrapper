@@ -40,9 +40,9 @@ print_error() {
 check_dependencies() {
     print_status "Checking dependencies..."
     
-    # Check Python
-    if ! command -v python3 &> /dev/null; then
-        print_error "Python 3 is not installed"
+    # Check uv
+    if ! command -v uv &> /dev/null; then
+        print_error "uv is not installed (https://docs.astral.sh/uv/)"
         return 1
     fi
     
@@ -117,7 +117,7 @@ start_server() {
     fi
     
     # Start server
-    local cmd="python3 $SERVER_SCRIPT"
+    local cmd="uv run python3 $SERVER_SCRIPT"
     if [ -f "$CONFIG_FILE" ]; then
         cmd="$cmd --config $CONFIG_FILE"
     fi
@@ -196,7 +196,7 @@ show_status() {
         
         # Test connection
         print_status "Testing connection..."
-        if python3 -c "import socket; s=socket.socket(); s.settimeout(2); s.connect(('localhost', 10300)); s.close(); print('✅ Port 10300 accessible')" 2>/dev/null; then
+        if uv run python3 -c "import socket; s=socket.socket(); s.settimeout(2); s.connect(('localhost', 10300)); s.close(); print('✅ Port 10300 accessible')" 2>/dev/null; then
             print_success "Service is accessible on port 10300"
         else
             print_warning "Service may not be responding on port 10300"
@@ -236,7 +236,7 @@ test_service() {
     print_status "Testing Wyoming service discovery..."
     
     if [ -f "$SCRIPT_DIR/wyoming_test_client.py" ]; then
-        python3 "$SCRIPT_DIR/wyoming_test_client.py" --uri tcp://localhost:10300
+        uv run python3 "$SCRIPT_DIR/wyoming_test_client.py" --uri tcp://localhost:10300
     else
         print_error "Test client not found: $SCRIPT_DIR/wyoming_test_client.py"
         return 1

@@ -8,9 +8,9 @@ Type=simple
 User=YOUR_USERNAME
 Group=YOUR_USERNAME
 WorkingDirectory=/path/to/parakeet-wyoming-wrapper
-Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Environment=PATH=/home/YOUR_USERNAME/.local/bin:/usr/local/bin:/usr/bin:/bin
 Environment=PYTHONPATH=/path/to/parakeet-wyoming-wrapper
-ExecStart=/usr/bin/python3 /path/to/parakeet-wyoming-wrapper/wyoming_vad_asr_server.py --config /path/to/parakeet-wyoming-wrapper/config.yaml
+ExecStart=/home/YOUR_USERNAME/.local/bin/uv run python3 /path/to/parakeet-wyoming-wrapper/wyoming_vad_asr_server.py --config /path/to/parakeet-wyoming-wrapper/config.yaml
 Restart=always
 RestartSec=5
 StandardOutput=journal
